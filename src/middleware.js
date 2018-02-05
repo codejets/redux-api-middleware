@@ -2,6 +2,7 @@ import RSAA from './RSAA';
 import { isRSAA, validateRSAA } from './validation';
 import { InvalidRSAA, RequestError } from './errors';
 import { normalizeTypeDescriptors, actionWith } from './util';
+import {toastr} from 'react-redux-toastr'
 
 /**
  * A Redux middleware that processes RSAA actions.
@@ -173,6 +174,7 @@ function apiMiddleware({ getState }) {
       if (res.ok) {
         return next(await actionWith(successType, [action, getState(), res]));
       } else {
+        toastr.warning(`Something went wrong`, {progressBar: false, timeOut: 14000})
         return next(
           await actionWith(
             {
